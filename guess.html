@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The NUmber Game</title>
+  
+    <style>
+        body {
+            background-color: #333232;
+            width: 500px;
+            height: 500px;
+            margin: 50px auto;
+
+        }
+
+        #container {
+            background-color: #0F2431;
+            border: 2px solid #F5F4C3;
+            width: 550px;
+            height: 275px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 15px;
+
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        label {
+            color: white;
+            font-size: 25px;
+        }
+
+        input {
+            margin: 15px auto;
+        }
+
+        .button {
+            width: 100px;
+        }
+
+        span {
+            color: red;
+            font-size: 20px;
+        }
+
+
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 150px;
+            color: red;
+            text-align: center;
+            font-size: 18px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div id="container">
+          
+        <label for="">Guess a number between 1 to 10.</label><br><br>
+        <label for="">Enter an Integer number below :</label><br><br> 
+        <input type="number" id="userInput" value="" onfocus="myFunction(this)"><br><br>
+
+        <input class="button" type="button" value="play" onclick="play();">
+        <input class="button" type="button" value="Reset" onclick="reset();"><br><br>
+
+        <span id="spanResult"></span>
+    </div>
+
+
+
+</body>
+<script>
+    
+    function play() {
+
+        let userNumber = (parseInt(document.getElementById("userInput").value));
+        if (userNumber < 1 || userNumber > 10) {    
+            userNumber.disabled = true;
+            alert("Button has been disabled. Please input your valid number."); //数字正しく入力できない場合にはこの注意点が出て来ます。
+            return;
+        }
+        else if (isNaN(userNumber)) {
+            userNumber.disabled = true;   //only number is able. example:1~10
+            alert("Button has been disabled. Please input your valid number.");
+            return;
+        }
+        let spanTxt = document.getElementById("spanResult");
+        let randomNumber = [Math.floor(Math.random() * 10)]; //random number 1 to 10
+
+        if (userNumber == randomNumber) {
+            spanTxt.innerHTML = "You guessed right. It was " + randomNumber;
+            spanTxt.style.color = "green";
+        }
+        else if (userNumber > randomNumber && userNumber < 10) {   //10より小さい数を入力必要
+            spanTxt.innerHTML = "You guessed  to high";
+        }
+        else if (userNumber < randomNumber && userNumber > 1) {　　　　//1より大きい数を入力必要
+            spanTxt.innerHTML = "You guessed  to low";
+        }
+        else if (userNumber < 1) {
+            spanTxt.innerHTML = "Higher, it has to be between 1 and 10";
+        }
+        
+
+        else {
+            spanTxt.innerHTML = "Lowe,it has to be between 1 and 10   " + randomNumber;
+        }
+        (document.getElementById("userInput").value) = "";
+    }
+    function myFunction(x) {
+
+        x.style.background = "#008080";
+        x.style.color = "white";
+        x.style.fontSize = "17px"
+        x.style.fontWeight = "bold";
+    }
+    function reset() {
+
+        location.reload();  //locationオブジェクトのreload()メソッドは、現在表示されているページのリロード（再読み込み）を行います。 一般的なブラウザの[更新]ボタンを押したときと同じ動作です
+    }
+
+</script>
+
+</html>
